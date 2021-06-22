@@ -20,6 +20,6 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: ./mvnw clean build
+      run: ./mvnw package
     - name: Spring boot run with Maven
       run: nohup ./mvnw spring-boot:run &
