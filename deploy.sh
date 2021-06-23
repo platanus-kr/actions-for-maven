@@ -11,7 +11,7 @@ APP_NAME=actiontest
 #if [ ! -d "$REPOSITORY" ]; then
 #  git clone $REMOTE_REPOSITORY server
 #fi
-
+wall "hello?"
 # 저장소로부터 소스를 업데이트 받습니다.
 git pull
 

@@ -27,5 +27,4 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd git/server
-            chmod 755 deploy.sh
-            ./deploy.sh
+            sh deploy.sh
