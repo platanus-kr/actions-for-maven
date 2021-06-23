@@ -5,7 +5,7 @@
 # APP_NAME=swlabs-helper
 
 #REMOTE_REPOSITORY=https://github.com/platanus-kr/actiontest.git
-REPOSITORY=$(PWD)
+REPOSITORY=`pwd`
 APP_NAME=actiontest
 
 #if [ ! -d "$REPOSITORY" ]; then
