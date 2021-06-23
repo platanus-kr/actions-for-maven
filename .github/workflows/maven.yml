@@ -8,11 +8,11 @@ on:
     paths-ignore:
       - 'README.md'
       - 'docs/**'
-#  pull_request:
-#    branches: [main]
-#    paths-ignore:
-#      - 'README.md'
-#      - 'docs/**'
+    #  pull_request:
+    #    branches: [main]
+    #    paths-ignore:
+    #      - 'README.md'
+    #      - 'docs/**'
 jobs:
   build:
     name: Build
@@ -26,5 +26,5 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd git
+            cd git/server
             ./deploy.sh
