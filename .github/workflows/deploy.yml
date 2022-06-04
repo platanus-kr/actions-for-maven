@@ -14,13 +14,13 @@ jobs:
   artifact_build:
     runs-on: ubuntu-latest
     steps:
-      - name: Use checkout v2
+      - name: Checkout repository
         uses: actions/checkout@v2
       - name: Build package
         run: ./mvnw package
-      - name: Display file
+      - name: Display structure of build files
         run: ls -ahl ./target/*.jar
-      - name: Upload math result for artifact_build job
+      - name: Upload build result for artifact_build job
         uses: actions/upload-artifact@v3
         with:
           name: artifact
@@ -30,23 +30,35 @@ jobs:
     needs: [ artifact_build ]
     runs-on: ubuntu-latest
     steps:
-      - name: Download math result for artifact_build job
+      - name: Download build result for artifact_build job
         uses: actions/download-artifact@v3
         with:
           name: artifact
+          path: deploy
       - name: Display structure of downloaded files
         run: ls -alh
-      - name: Pickup jar
+      - name: Transfer artifact
         uses: appleboy/scp-action@master
         with:
           username: ${{ secrets.USERNAME }}
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
+          rm: true
 #          source: "./build/libs/*.jar" # gradle
-          source: "*.jar" # maven
+          source: "deploy/*.jar" # maven
           target: "/home/ec2-user/deploy"
           strip_components: 2
+      - name: Display structure of transfer files
+        uses: appleboy/ssh-action@master
+        with:
+          username: ${{ secrets.USERNAME }}
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.KEY }}
+          script: |
+            cd /home/ec2-user/deploy
+            ls -alh
 #
 #      - name: Transfer Deploy Script use SCP
 #        uses: appleboy/scp-action@master
