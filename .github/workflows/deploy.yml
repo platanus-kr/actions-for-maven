@@ -7,8 +7,7 @@
 ## 배포 작업 단계
 ##    ① 빌드
 ##    ② 아티팩트 전송
-##    ③ 서비스 종료
-##    ④ 서비스 실행
+##    ③ 서비스 재기동
 
 name: Deploy service for production
 on:
@@ -87,7 +86,7 @@ jobs:
           script: |
             cd /home/ec2-user/deploy
             ls -alh
-  ## 3. 서비스 종료
+  ## 3. 서비스 재기동
   service_shutdown:
     ## 앞 작업이 선행되고 성공해야 함
     needs: [ build, distribute ]
@@ -101,19 +100,5 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
           script: |
-            echo "서비스 종료 스크립트"
-  ## 4. 서비스 시작
-  service_startup:
-    ## 앞 작업이 선행되고 성공해야 함
-    needs: [ build, distribute, service_shutdown ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Start service
-        uses: appleboy/ssh-action@master
-        with:
-          username: ${{ secrets.USERNAME }}
-          host: ${{ secrets.HOST }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.KEY }}
-          script: |
-            echo "서비스 시작 스크립트"       
+            echo "서비스 종료 스크립트. pgrep 부분 개선 및 루프.."
+            echo "서비스 시작 스크립트"
