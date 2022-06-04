@@ -14,7 +14,21 @@ jobs:
       - name: Use checkout v2
         uses: actions/checkout@v2
       - name: Build package
-        run: ./mvnw package
+        run: |
+          ./mvnw package
+          ls -al ./target
+#      - name: Upload math result for job 1
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: homework
+#          path: math-homework.txt
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+#      - name: Download math result for job 1
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: homework
       - name: Pickup jar
         uses: appleboy/scp-action@master
         with:
