@@ -50,9 +50,9 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
           rm: true
-          source: "*.jar"
+          source: "dist/*.jar"
           target: "/home/ec2-user/deploy"
-#          strip_components: 2
+          strip_components: 1
       - name: Display structure of transfer files
         uses: appleboy/ssh-action@master
         with:
