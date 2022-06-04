@@ -1,0 +1,47 @@
+name: Deploy jar
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [ Maven Package Build ]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use checkout v2
+        uses: actions/checkout@v2
+      - name: Build package
+        run: ./mvnw package
+      - name: Pickup jar
+        uses: appleboy/scp-action@master
+        with:
+          username: ${{ secrets.USERNAME }}
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.PRIVATE_KEY }}
+#          source: "./build/libs/*.jar" # gradle
+          source: "./target/*.jar" # maven
+          target: "~/repo"
+          strip_components: 2
+#
+#      - name: Transfer Deploy Script use SCP
+#        uses: appleboy/scp-action@master
+#        with:
+#          username: ${{ secrets.USERNAME }}
+#          host: ${{ secrets.HOST }}
+#          port: ${{ secrets.PORT }}
+#          key: ${{ secrets.PRIVATE_KEY }}
+#          source: "deploy.sh"
+#          target: "~/repo"
+#
+#      - name: Execute Server Init Script
+#        uses: appleboy/ssh-action@master
+#        with:
+#          username: ubuntu
+#          host: ${{ secrets.HOST }}
+#          key: ${{ secrets.PRIVATE_KEY }}
+#          script_stop: true
+#          script: chmod +x /home/ubuntu/deploy/deploy.sh && sh /home/ubuntu/deploy/deploy.sh
