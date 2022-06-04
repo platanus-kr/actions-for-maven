@@ -24,7 +24,7 @@ jobs:
           key: ${{ secrets.KEY }}
 #          source: "./build/libs/*.jar" # gradle
           source: "./target/*.jar" # maven
-          target: "/opt/deploy"
+          target: "/home/ec2-user/deploy"
           strip_components: 2
 #
 #      - name: Transfer Deploy Script use SCP
