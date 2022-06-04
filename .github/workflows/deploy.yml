@@ -38,7 +38,10 @@ jobs:
           name: project_artifact
           path: dist
       - name: Display structure of downloaded files
-        run: ls -alh dist
+        run: |
+          pwd
+          ls -alh
+          ls -alh dist
       - name: Transfer artifact
         uses: appleboy/scp-action@master
         with:
@@ -47,7 +50,7 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
           rm: true
-          source: "deploy/*"
+          source: "*.jar"
           target: "/home/ec2-user/deploy"
 #          strip_components: 2
       - name: Display structure of transfer files
