@@ -17,20 +17,20 @@ jobs:
       - name: Use checkout v2
         uses: actions/checkout@v2
       - name: Build package
-        run: |
-          ./mvnw package
-          ls ./target/*.jar
-      - name: Upload math result for job 1
+        run: ./mvnw package
+      - name: Display file
+        run: ls -ahl ./target/*.jar
+      - name: Upload math result for artifact_build job
         uses: actions/upload-artifact@v3
         with:
           name: artifact
-          path: "*.jar"
+          path: "./target/*.jar"
   artifact_deploy:
     if: ${{ always() }}
     needs: [ artifact_build ]
     runs-on: ubuntu-latest
     steps:
-      - name: Download math result for job 1
+      - name: Download math result for artifact_build job
         uses: actions/download-artifact@v3
         with:
           name: artifact
