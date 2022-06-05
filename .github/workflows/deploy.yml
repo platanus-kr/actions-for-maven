@@ -41,7 +41,6 @@ jobs:
           name: project_artifact
           ## Maven의 경우
           path: "./target/*.jar"
-          ## Gradle의 경우는 plain.jar를 지우고 작업하는게 좋을 것 같음
   ## 2. 배포
   distribute:
     ## 빌드가 선행되야함.
