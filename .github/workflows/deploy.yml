@@ -72,7 +72,7 @@ jobs:
           key: ${{ secrets.KEY }}
           rm: true
           source: "dist/*.jar"
-          target: "/home/ec2-user/deploy"
+          target: ${{ secrets.DIST_PATH }}
           ## 작업에 사용했던 dist 디렉토리를 경로상에서 제거
           strip_components: 1
       ## 전송된 아티팩트 확인
@@ -84,7 +84,7 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
           script: |
-            cd /home/ec2-user/deploy
+            cd ${{ secrets.DIST_PATH }}
             ls -alh
   ## 3. 서비스 재기동
   service_shutdown:
@@ -100,5 +100,6 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
           script: |
+            cd ${{ secrets.DIST_PATH }}
             echo "서비스 종료 스크립트. pgrep 부분 개선 및 루프.."
             echo "서비스 시작 스크립트"
